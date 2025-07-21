@@ -1,2 +1,32 @@
-# Project_Portfolio_2
-Includes Unity Project files, as well as the Unity.gitignore template. I'll be including some blend files later for models, and other elements that we'll need for the project as a whole.
+# Project Portfolio 2
+Matthew Massey
+. . .
+. . .
+. . .
+. . .
+
+# Matthew's TODOs: (Enemy)
+* Connect Unity project to the Repo
+* Complete modeling for enemy objects/actors
+* Create and compile animation programming for the enemies
+* Implement AI movement, attack and flee response patterns
+
+# . . .'s TODOs: (Player)
+*
+*
+*
+
+# . . .'s TODOs: (Scene)
+*
+*
+*
+
+# . . .'s TODOs: (Bug/Play Testing)
+*
+*
+*
+
+# . . .'s TODOs: ()
+*
+*
+*
