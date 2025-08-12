@@ -1,10 +1,11 @@
 using UnityEditor.Search;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour, IDDamage {
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
 
+    [SerializeField] int health;
     [SerializeField] int speed;
     [SerializeField] int sprintMod;
     [SerializeField] int jumpSpeed;
@@ -76,6 +77,15 @@ public class PlayerController : MonoBehaviour {
             {
                 damage.TakeDamage(shootDamage);
             }
+        }
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+        if (health <= 0)
+        {
+            GameManager.instance.YouLose();
         }
     }
 }
