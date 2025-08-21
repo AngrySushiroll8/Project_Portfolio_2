@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour, IDDamage, IPickup {
     [SerializeField] LayerMask ignoreLayer;
@@ -9,11 +10,12 @@ public class PlayerController : MonoBehaviour, IDDamage, IPickup {
     [SerializeField] int health, speed, sprintMod, jumpSpeed, jumpMax, gravity, shootDistance, shootDamage;
     [SerializeField] float shootRate;
     [SerializeField] GameObject gunModel;
+    [SerializeField] List<GunStats> guns = new List<GunStats>();
 
     Vector3 moveDir;
     Vector3 playerVel;
 
-    int jumpCount;
+    int jumpCount, gunList;
     bool isSprint;
 
     float shootTimer;
@@ -37,7 +39,8 @@ public class PlayerController : MonoBehaviour, IDDamage, IPickup {
         Jump();
         controller.Move(playerVel * Time.deltaTime);
         playerVel.y -= gravity * Time.deltaTime;
-        if (Input.GetButton("Fire1") && shootTimer >= shootRate) Shoot();
+        if (Input.GetButton("Fire1") && guns.Count > 0 && guns[gunList].ammoCurrent > 0 && shootTimer >= shootRate) Shoot();
+        SelectGun();
     }
     void Jump()
     {
@@ -62,15 +65,24 @@ public class PlayerController : MonoBehaviour, IDDamage, IPickup {
     void Shoot()
     {
         shootTimer = 0;
+        guns[gunList].ammoCurrent--;
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDistance, ~ignoreLayer))
         {
             Debug.Log(hit.collider.name);
             IDDamage damage = hit.collider.GetComponent<IDDamage>();
+            Instantiate(guns[gunList].hitEffect, hit.point, Quaternion.identity);
             if (damage != null)
             {
                 damage.TakeDamage(shootDamage);
             }
+        }
+    }
+    void Reload()
+    {
+        if (Input.GetButtonDown("Reload"))
+        {
+            guns[gunList].ammoCurrent = guns[gunList].ammoMax;
         }
     }
 
@@ -85,10 +97,22 @@ public class PlayerController : MonoBehaviour, IDDamage, IPickup {
 
     public void GetGunStats(GunStats gun)
     {
-        shootDamage = gun.shootDamage;
-        shootDistance = gun.shootDistance;
-        shootRate = gun.shootRate;
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
+        guns.Add(gun);
+        gunList = guns.Count - 1;
+        ChangeGun();
+    }
+    void ChangeGun()
+    {
+        shootDamage = guns[gunList].shootDamage;
+        shootDistance = guns[gunList].shootDistance;
+        shootRate = guns[gunList].shootRate;
+        gunModel.GetComponent<MeshFilter>().sharedMesh = guns[gunList].model.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = guns[gunList].model.GetComponent<MeshRenderer>().sharedMaterial;
+
+    }
+    void SelectGun()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunList < guns.Count - 1) { gunList++; ChangeGun(); }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunList > 0) { gunList--; ChangeGun(); }
     }
 }

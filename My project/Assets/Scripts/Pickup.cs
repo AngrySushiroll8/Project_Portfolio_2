@@ -10,6 +10,7 @@ public class Pickup : MonoBehaviour
         if(pickup != null )
         {
             pickup.GetGunStats(gun);
+            gun.ammoCurrent = gun.ammoMax;
             Destroy(gameObject);
         }
     }

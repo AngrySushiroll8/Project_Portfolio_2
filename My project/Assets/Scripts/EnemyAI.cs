@@ -18,6 +18,9 @@ public class EnemyAI : MonoBehaviour, IDDamage
     [SerializeField] int FOV, roamDistance, roamPauseTimer;
     float roamtTimer, angleToPlayer, stoppingDistanceOrigin;
     Vector3 startingPosition;
+
+    [SerializeField] Animator animator;
+    [SerializeField] float animateSpeed;
     void Start()
     {
         colorOrig = model.material.color;
@@ -29,6 +32,7 @@ public class EnemyAI : MonoBehaviour, IDDamage
     // Update is called once per frame
     void Update()
     {
+        SetAnimations();
         //shootTimer += Time.deltaTime;
         //roamtTimer += Time.deltaTime;
         //if(playerInTrigger&& CanSeePlayer())
@@ -39,6 +43,12 @@ public class EnemyAI : MonoBehaviour, IDDamage
         //  CheckRoam();
         //}
         if (agent.remainingDistance < 0.01f) roamtTimer += Time.deltaTime;
+    }
+    void SetAnimations()
+    {
+        float agentSpeed = agent.velocity.normalized.magnitude;
+        float animatedSpeed = animator.GetFloat("Speed");
+        animator.SetFloat("Speed", Mathf.Lerp(animatedSpeed, agentSpeed, Time.deltaTime * animateSpeed));
     }
     void CheckRoam()
     {
