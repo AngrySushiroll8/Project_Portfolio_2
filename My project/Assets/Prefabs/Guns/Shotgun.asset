@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1f9536cd9c4715478e369cb2ddcbf09, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: 
+  model: {fileID: 222416342631940908, guid: a1fc5323233aa324597b650851e4192f, type: 3}
+  shootDamage: 10
+  shootRate: 15
+  ammoCurrent: 0
+  ammoMax: 8
+  shootDistance: 10
+  hitEffect: {fileID: 0}
+  shootSound: []
+  shootVolume: 0

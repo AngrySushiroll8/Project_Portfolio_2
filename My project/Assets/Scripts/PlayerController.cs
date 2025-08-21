@@ -1,20 +1,14 @@
+using Unity.VisualScripting;
 using UnityEditor.Search;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IDDamage {
+public class PlayerController : MonoBehaviour, IDDamage, IPickup {
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] CharacterController controller;
 
-    [SerializeField] int health;
-    [SerializeField] int speed;
-    [SerializeField] int sprintMod;
-    [SerializeField] int jumpSpeed;
-    [SerializeField] int jumpMax;
-    [SerializeField] int gravity;
-
-    [SerializeField] int shootDamage;
+    [SerializeField] int health, speed, sprintMod, jumpSpeed, jumpMax, gravity, shootDistance, shootDamage;
     [SerializeField] float shootRate;
-    [SerializeField] int shootDistance;
+    [SerializeField] GameObject gunModel;
 
     Vector3 moveDir;
     Vector3 playerVel;
@@ -87,5 +81,14 @@ public class PlayerController : MonoBehaviour, IDDamage {
         {
             GameManager.instance.YouLose();
         }
+    }
+
+    public void GetGunStats(GunStats gun)
+    {
+        shootDamage = gun.shootDamage;
+        shootDistance = gun.shootDistance;
+        shootRate = gun.shootRate;
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.model.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.model.GetComponent<MeshRenderer>().sharedMaterial;
     }
 }

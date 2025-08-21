@@ -15,11 +15,8 @@ public class EnemyAI : MonoBehaviour, IDDamage
     int walkRange;
     [SerializeField] int enemyFireRate;
 
-    [SerializeField] int FOV;
-    [SerializeField] int roamDistance, roamPauseTimer;
-    float roamtTimer;
-    float angleToPlayer;
-    float stoppingDistanceOrigin;
+    [SerializeField] int FOV, roamDistance, roamPauseTimer;
+    float roamtTimer, angleToPlayer, stoppingDistanceOrigin;
     Vector3 startingPosition;
     void Start()
     {

@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] int sens;
-    [SerializeField] int lockVertMin, lockVertMax;
+    [SerializeField] int sens, lockVertMin, lockVertMax;
     [SerializeField] bool invertY;
     float rotX;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
