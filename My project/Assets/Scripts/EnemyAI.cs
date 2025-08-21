@@ -32,6 +32,7 @@ public class EnemyAI : MonoBehaviour, IDDamage
     // Update is called once per frame
     void Update()
     {
+        animator.SetFloat("Speed", agent.velocity.normalized.magnitude) ;
         SetAnimations();
         //shootTimer += Time.deltaTime;
         //roamtTimer += Time.deltaTime;
@@ -94,6 +95,7 @@ public class EnemyAI : MonoBehaviour, IDDamage
         {
             HP -= amount;
             StartCoroutine(FlashRed());
+            //agent.SetDestination(GameManager);
         }
         if (HP <= 0)
         {
